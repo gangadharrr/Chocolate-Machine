@@ -10,6 +10,7 @@ using System.Net.NetworkInformation;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Transactions;
+using ConsoleApp1;
 
 namespace Chocolate_Machine
 {
@@ -211,10 +212,19 @@ namespace Chocolate_Machine
             return list.ToList();
         }
     }
-    public class Program
+
+    public class SaraPSY
+    {
+        public void Quesionnare()
+        {
+            
+        }
+    }
+    
+    public class Program:Class1
     {
 
-        static void Main(string[] args)
+        void Main()
         {
             try
             {
@@ -241,19 +251,19 @@ namespace Chocolate_Machine
                 dm.changeChocolateColorAllOfxCount("purple", "skyblue");
                 dm.noOfChocolates();
                 dm.sortChocolateBasedOnCount();
-
-
-
-
-
-
-
-
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
+        }
+        static void Main(String[] args)
+        {
+          
+            ProtectedClass pc = new ProtectedClass();
+            ProtectedInternalClass pic = new ProtectedInternalClass();
+
+
         }
     }
 }
