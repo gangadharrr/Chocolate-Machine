@@ -9,8 +9,9 @@ using System.Linq.Expressions;
 using System.Net.NetworkInformation;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics.Arm;
 using System.Transactions;
-using ConsoleApp1;
+
 
 namespace Chocolate_Machine
 {
@@ -215,13 +216,94 @@ namespace Chocolate_Machine
 
     public class SaraPSY
     {
+        Dictionary<string, List<int>> ZodiacSigns = new Dictionary<string, List<int>>()
+        {
+            { "Aries",new List<int>(){3,21,4,19} },
+            { "Taurus",new List<int>(){4,20,5,20} },
+            { "Gemini",new List<int>(){5,21,6,21} },
+            { "Cancer",new List<int>(){6,22,7,22} },
+            { "Leo",new List<int>(){7,23,8,22} },
+            { "Virgo",new List<int>(){8,23,9,22} },
+            { "Libra",new List<int>(){9,23,10,23} },
+            { "Scorpio",new List<int>(){10,24,11,21} },
+            { "Sagittarius",new List<int>(){11,22,12,21} },
+            { "Capricorn",new List<int>(){12,22,1,19} },
+            { "Aquarius",new List<int>(){1,20,2,18} },
+            { "Pisces" ,new List<int>(){2,19,3,20}}
+        };
+        public string ZodiacSignOfPerson;
+        Dictionary<string, int> ZodiacSignCalculator = new Dictionary<string, int>();
+        Dictionary<string,List<string>> CompatabilitySigns=new Dictionary<string, List<string>>()
+        {
+            {"Aries",new List<string>(){ "Gemini", "Libra" } },
+            { "Taurus",new List<string>(){ "Capricorn", "Virgo", "Cancer" } },
+            {"Gemini",new List<string>(){"Libra", "Aquarius", "Sagittarius" } },
+            { "Cancer",new List<string>(){ "Virgo", "Scorpio","Pisces" } },
+            {"Leo",new List<string>(){"Sagittarius","Aquarius","Gemini" } },
+            {"Virgo",new List<string>(){ "Capricorn","Taurus","Scorpio" } },
+            {"Libra",new List<string>(){ "Aries","Aquarius" } },
+            {"Scorpio",new List<string>(){ "Pisces","Cancer", "Virgo" } },
+            {"Sagittarius",new List<string>(){ "Gemini", "Aries" } },
+            {"Capricorn",new List<string>(){ "Virgos", "Scorpios" } },
+            {"Aquarius",new List<string>(){ "Gemini", "Libra" } },
+            {"Pisces",new List<string>(){ "Scorpio","Cancer","Capricorn" } }
+        };
+       
+
         public void Quesionnare()
         {
-            
+            Console.Write("Do you like to do dangerous stunts? Rate(1-5) :- ");
+            ZodiacSignCalculator["Aries"]=Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Do you Feel like you Are Down To Earth Person? Rate(1-5) :- ");
+            ZodiacSignCalculator["Taurus"] =Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Do you Feel like you are Center Of Attraction? Rate(1-5) :- ");
+            ZodiacSignCalculator["Gemini"] =Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Do you Feel like you can Hold a Secret? Rate(1-5) :- ");
+            ZodiacSignCalculator["Cancer"] =Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Do you like to Start Any Conversation? Rate(1-5) :- ");
+            ZodiacSignCalculator["Leo"] =Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Do you like to Organize Things Perfectly? Rate(1-5) :- ");
+            ZodiacSignCalculator["Virgo"] =Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Do you Feel Bad if Injustice Happen to someone? Rate(1-5) :- ");
+            ZodiacSignCalculator["Libra"] =Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Do you Feel like you would do Anything \n" +
+                "for the things you like most? Rate(1-5) :- ");
+            ZodiacSignCalculator["Scorpio"] =Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Do you like to Travel alot? Rate(1-5) :- ");
+            ZodiacSignCalculator["Sagittarius"] =Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Do you like Impression someone with Flattery? Rate(1-5) :- ");
+            ZodiacSignCalculator["Capricorn"] =Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Do you like to take risk of follwing your own path? Rate(1-5) :- ");
+            ZodiacSignCalculator["Aquarius"] =Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Do you Feel making strong relationships with everyone? Rate(1-5) :- ");
+            ZodiacSignCalculator["Pisces"] = Convert.ToInt32(Console.ReadLine());
+
+            ZodiacSignOfPerson= ZodiacSignCalculator.OrderByDescending(x => x.Value).ToList()[0].Key;
+            Console.WriteLine(ZodiacSignOfPerson);
         }
+        public void Compatability()
+        {
+            Console.WriteLine($"Your Compatible Signs Are :[{string.Join(", ", CompatabilitySigns[ZodiacSignOfPerson])}]");
+        }
+        public void PredictBirthday()
+        {
+            Console.WriteLine($"\nYour Birthday will be on: {ZodiacSigns[ZodiacSignOfPerson][0]}/{ZodiacSigns[ZodiacSignOfPerson][1]} - {ZodiacSigns[ZodiacSignOfPerson][2]}/{ZodiacSigns[ZodiacSignOfPerson][3]}");
+        }
+
     }
-    
-    public class Program:Class1
+
+    public class Program
     {
 
         void Main()
@@ -259,10 +341,11 @@ namespace Chocolate_Machine
         }
         static void Main(String[] args)
         {
-          
-            ProtectedClass pc = new ProtectedClass();
-            ProtectedInternalClass pic = new ProtectedInternalClass();
 
+            SaraPSY saraPSY = new SaraPSY();
+            saraPSY.Quesionnare();
+            saraPSY.Compatability();
+            saraPSY.PredictBirthday();
 
         }
     }
